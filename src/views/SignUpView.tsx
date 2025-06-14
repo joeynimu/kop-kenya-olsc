@@ -203,7 +203,7 @@ export default function SignUpView() {
           <Card className="w-full max-w-md border-2 border-[#C8102E] shadow-lg">
             <CardHeader className="bg-[#C8102E] text-white pt-1">
               <CardTitle className="text-2xl font-bold">
-                Join Kop Kenya OLSC
+                Join Kop Kenya (OLSC Kenya)
               </CardTitle>
               <CardDescription className="text-white/90 space-y-2 pb-2">
                 <p>
@@ -493,7 +493,7 @@ export default function SignUpView() {
                   <div className="text-sm text-gray-600 text-center">
                     By joining, you agree to our{" "}
                     <a
-                      href="/privacy-policy.pdf"
+                      href="/docs/Privacy-Policy-for-KOP Kenya-OLSC.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#C8102E] hover:text-[#A00D24] underline"
