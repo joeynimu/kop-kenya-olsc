@@ -28,6 +28,15 @@ import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+// Liverpool FC colors
+const colors = {
+  primary: "#C8102E", // Liverpool Red
+  secondary: "#F6EB61", // Liverpool Yellow
+  dark: "#1A1A1A", // Dark gray for text
+  light: "#FFFFFF", // White
+  gray: "#F3F4F6", // Light gray for backgrounds
+};
+
 const phoneInputStyles = {
   container: {
     width: "100%",
@@ -37,26 +46,26 @@ const phoneInputStyles = {
     height: "2.5rem",
     fontSize: "0.875rem",
     lineHeight: "1.25rem",
-    border: "1px solid #e2e8f0",
+    border: `1px solid ${colors.primary}`,
     borderRadius: "0.375rem",
     paddingLeft: "3.5rem",
-    backgroundColor: "white",
-    color: "#1f2937",
+    backgroundColor: colors.light,
+    color: colors.dark,
     "&:focus": {
       outline: "none",
-      borderColor: "#6366f1",
-      boxShadow: "0 0 0 1px #6366f1",
+      borderColor: colors.primary,
+      boxShadow: `0 0 0 1px ${colors.primary}`,
     },
   },
   button: {
-    border: "1px solid #e2e8f0",
+    border: `1px solid ${colors.primary}`,
     borderRight: "none",
     borderRadius: "0.375rem 0 0 0.375rem",
-    backgroundColor: "white",
+    backgroundColor: colors.light,
   },
   dropdown: {
-    backgroundColor: "white",
-    border: "1px solid #e2e8f0",
+    backgroundColor: colors.light,
+    border: `1px solid ${colors.primary}`,
     borderRadius: "0.375rem",
     boxShadow:
       "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
@@ -156,11 +165,13 @@ export default function SignUpView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <Card className="sm:mx-auto sm:w-full sm:max-w-md">
-        <CardHeader>
-          <CardTitle>Join Kop Kenya OLSC</CardTitle>
-          <CardDescription className="space-y-2">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <Card className="sm:mx-auto sm:w-full sm:max-w-md border-2 border-[#C8102E] shadow-lg">
+        <CardHeader className="bg-[#C8102E] text-white pt-1">
+          <CardTitle className="text-2xl font-bold">
+            Join Kop Kenya OLSC
+          </CardTitle>
+          <CardDescription className="text-white/90 space-y-2 pb-2">
             <p>
               Welcome to Kop Kenya, the official Liverpool FC Official Liverpool
               Supporters Club (OLSC) in Kenya. We bring together Kenyan Reds to
@@ -178,7 +189,7 @@ export default function SignUpView() {
             </p>
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -190,9 +201,13 @@ export default function SignUpView() {
                   field: ControllerRenderProps<SignUpFormData, "name">;
                 }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel className="text-[#1A1A1A]">Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
+                      <Input
+                        placeholder="Enter your full name"
+                        {...field}
+                        className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -208,12 +223,15 @@ export default function SignUpView() {
                   field: ControllerRenderProps<SignUpFormData, "email">;
                 }) => (
                   <FormItem>
-                    <FormLabel>Email address</FormLabel>
+                    <FormLabel className="text-[#1A1A1A]">
+                      Email address
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="email"
                         placeholder="Enter your email address"
                         {...field}
+                        className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
                       />
                     </FormControl>
                     <FormDescription>
@@ -234,7 +252,9 @@ export default function SignUpView() {
                   field: ControllerRenderProps<SignUpFormData, "phone">;
                 }) => (
                   <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel className="text-[#1A1A1A]">
+                      Phone Number
+                    </FormLabel>
                     <FormControl>
                       <PhoneInput
                         country="ke"
@@ -271,18 +291,37 @@ export default function SignUpView() {
                   field,
                 }: {
                   field: ControllerRenderProps<SignUpFormData, "dateOfBirth">;
-                }) => (
-                  <FormItem>
-                    <FormLabel>Date of Birth</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      You must be at least 18 years old to join
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                }) => {
+                  // Calculate the date 18 years ago from today
+                  const today = new Date();
+                  const maxDate = new Date(
+                    today.getFullYear() - 18,
+                    today.getMonth(),
+                    today.getDate()
+                  );
+                  const minDate = new Date(1900, 0, 1); // Set a reasonable minimum date
+
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-[#1A1A1A]">
+                        Date of Birth
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="date"
+                          {...field}
+                          max={maxDate.toISOString().split("T")[0]}
+                          min={minDate.toISOString().split("T")[0]}
+                          className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        You must be at least 18 years old to join
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
 
               <FormField
@@ -297,7 +336,7 @@ export default function SignUpView() {
                   >;
                 }) => (
                   <FormItem className="space-y-3">
-                    <FormLabel>
+                    <FormLabel className="text-[#1A1A1A]">
                       Are you already in the Kop Kenya WhatsApp group?
                     </FormLabel>
                     <FormControl>
@@ -308,7 +347,10 @@ export default function SignUpView() {
                       >
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="yes" />
+                            <RadioGroupItem
+                              value="yes"
+                              className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
+                            />
                           </FormControl>
                           <FormLabel className="font-normal">
                             Yes, I am already in the group
@@ -316,7 +358,10 @@ export default function SignUpView() {
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="no" />
+                            <RadioGroupItem
+                              value="no"
+                              className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
+                            />
                           </FormControl>
                           <FormLabel className="font-normal">
                             No, I am not in the group
@@ -350,6 +395,7 @@ export default function SignUpView() {
                         <Checkbox
                           checked={field.value}
                           onCheckedChange={field.onChange}
+                          className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
@@ -380,6 +426,7 @@ export default function SignUpView() {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                        className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
@@ -393,7 +440,11 @@ export default function SignUpView() {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full bg-[#C8102E] hover:bg-[#A00D24] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Creating account..." : "Join Kop Kenya"}
               </Button>
             </form>
