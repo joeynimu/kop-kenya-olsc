@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "./prismaClient";
-import { AppError, ErrorCodes } from "@/src/lib/errors";
+import { ErrorCodes } from "@/src/lib/errors";
 
 type SignUpFormData = {
   name: string;
@@ -23,10 +23,14 @@ export async function signUpUser(data: SignUpFormData) {
     });
 
     if (existingUser) {
-      throw new AppError(
-        "A user with this email or phone number is already registered",
-        ErrorCodes.USER_EXISTS
-      );
+      return {
+        success: false,
+        error: {
+          message:
+            "A user with this email or phone number is already registered",
+          code: ErrorCodes.USER_EXISTS,
+        },
+      };
     }
 
     // create user if all is well
@@ -49,18 +53,15 @@ export async function signUpUser(data: SignUpFormData) {
   } catch (error) {
     console.error("Error signing up:", error);
 
-    if (error instanceof AppError) {
-      throw error;
-    }
-
-    if (error instanceof Error) {
-      throw new AppError(error.message, ErrorCodes.UNKNOWN_ERROR, 500);
-    }
-
-    throw new AppError(
-      "An unexpected error occurred",
-      ErrorCodes.UNKNOWN_ERROR,
-      500
-    );
+    return {
+      success: false,
+      error: {
+        message:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred",
+        code: ErrorCodes.UNKNOWN_ERROR,
+      },
+    };
   }
 }

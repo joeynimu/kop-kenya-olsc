@@ -13,7 +13,19 @@ export class AppError extends Error {
       message: this.message,
       code: this.code,
       statusCode: this.statusCode,
+      name: this.name,
     };
+  }
+
+  static fromJSON(json: {
+    message: string;
+    code: string;
+    statusCode: number;
+    name: string;
+  }): AppError {
+    const error = new AppError(json.message, json.code, json.statusCode);
+    error.name = json.name;
+    return error;
   }
 }
 

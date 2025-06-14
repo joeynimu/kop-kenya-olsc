@@ -31,7 +31,6 @@ import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { signUpUser } from "@/src/app/actions";
 import { toast } from "sonner";
-import { AppError } from "@/src/lib/errors";
 
 // Liverpool FC colors
 const colors = {
@@ -144,23 +143,31 @@ const signUpSchema = z
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
+type SignUpResponse = {
+  success: boolean;
+  message?: string;
+  error?: {
+    message: string;
+    code: string;
+  };
+};
+
 export default function SignUpView() {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: signUpUser,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      form.reset();
-    },
-    onError: (error: unknown) => {
-      console.error("Sign up error:", error);
-
-      if (error instanceof AppError) {
-        toast.error(error.message);
-      } else if (error instanceof Error) {
-        toast.error(error.message);
+    onSuccess: (response: SignUpResponse) => {
+      if (response.success) {
+        toast.success(response.message);
+        form.reset();
+      } else if (response.error?.message) {
+        toast.error(response.error.message);
       } else {
         toast.error("An unexpected error occurred during sign up");
       }
+    },
+    onError: (error: unknown) => {
+      console.error("Sign up error:", error);
+      toast.error("An unexpected error occurred during sign up");
     },
   });
 
