@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -28,6 +27,11 @@ import { ControllerRenderProps } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import { signUpUser } from "@/src/app/actions";
+import { toast } from "sonner";
+import { AppError } from "@/src/lib/errors";
 
 // Liverpool FC colors
 const colors = {
@@ -120,7 +124,7 @@ const signUpSchema = z
     isAlreadyInWhatsapp: z.enum(["yes", "no"], {
       required_error: "Please select if you are already in the WhatsApp group",
     }),
-    shouldInviteToWhatsapp: z.boolean().optional(),
+    shouldInviteToWhatsapp: z.boolean(),
     shouldReceiveUpdates: z.boolean(),
   })
   .refine(
@@ -141,7 +145,24 @@ const signUpSchema = z
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUpView() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: signUpUser,
+    onSuccess: (data) => {
+      toast.success(data.message);
+      form.reset();
+    },
+    onError: (error: unknown) => {
+      console.error("Sign up error:", error);
+
+      if (error instanceof AppError) {
+        toast.error(error.message);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred during sign up");
+      }
+    },
+  });
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -151,24 +172,12 @@ export default function SignUpView() {
     },
   });
 
+  const onSubmit = async (data: SignUpFormData) => mutateAsync(data);
+
   const isAlreadyInWhatsapp = form.watch("isAlreadyInWhatsapp");
-
-  const onSubmit = async (data: SignUpFormData) => {
-    setIsSubmitting(true);
-    try {
-      // TODO: Implement API call to create user
-      console.log(data);
-    } catch (error) {
-      console.error("Error signing up:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="flex flex-col lg:flex-row min-h-screen">
-        {/* Image Column */}
         <div className="w-full lg:w-1/2 lg:fixed lg:top-0 lg:left-0 lg:h-screen">
           <div className="h-[200px] lg:h-screen w-full overflow-hidden relative">
             <Image
@@ -367,7 +376,15 @@ export default function SignUpView() {
                         </FormLabel>
                         <FormControl>
                           <RadioGroup
-                            onValueChange={field.onChange}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              if (value === "yes") {
+                                form.setValue("shouldInviteToWhatsapp", false);
+                              }
+                              if (value === "no") {
+                                form.setValue("shouldInviteToWhatsapp", true);
+                              }
+                            }}
                             defaultValue={field.value}
                             className="flex flex-col space-y-1"
                           >
@@ -466,12 +483,24 @@ export default function SignUpView() {
                     )}
                   />
 
+                  <div className="text-sm text-gray-600 text-center">
+                    By joining, you agree to our{" "}
+                    <a
+                      href="/privacy-policy.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#C8102E] hover:text-[#A00D24] underline"
+                    >
+                      Privacy Policy
+                    </a>
+                  </div>
+
                   <Button
                     type="submit"
                     className="w-full bg-[#C8102E] hover:bg-[#A00D24] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
-                    disabled={isSubmitting}
+                    disabled={isPending}
                   >
-                    {isSubmitting ? "Creating account..." : "Join Kop Kenya"}
+                    {isPending ? "Creating account..." : "Join Kop Kenya"}
                   </Button>
                 </form>
               </Form>
