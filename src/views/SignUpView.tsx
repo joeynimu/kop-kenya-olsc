@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 import {
   Form,
@@ -165,292 +166,319 @@ export default function SignUpView() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <Card className="sm:mx-auto sm:w-full sm:max-w-md border-2 border-[#C8102E] shadow-lg">
-        <CardHeader className="bg-[#C8102E] text-white pt-1">
-          <CardTitle className="text-2xl font-bold">
-            Join Kop Kenya OLSC
-          </CardTitle>
-          <CardDescription className="text-white/90 space-y-2 pb-2">
-            <p>
-              Welcome to Kop Kenya, the official Liverpool FC Official Liverpool
-              Supporters Club (OLSC) in Kenya. We bring together Kenyan Reds to
-              share our passion for Liverpool FC.
-            </p>
-            <p>By joining our community, you&apos;ll get access to:</p>
-            <ul className="list-disc pl-4 space-y-1">
-              <li>Match screenings and watch parties</li>
-              <li>Exclusive club events and meetups</li>
-              <li>Updates on Liverpool FC news and activities</li>
-              <li>A vibrant community of fellow supporters</li>
-            </ul>
-            <p className="pt-2">
-              Fill in your details below to become a member.
-            </p>
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<SignUpFormData, "name">;
-                }) => (
-                  <FormItem>
-                    <FormLabel className="text-[#1A1A1A]">Full Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your full name"
-                        {...field}
-                        className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Image Column */}
+        <div className="w-full lg:w-1/2 lg:fixed lg:top-0 lg:left-0 lg:h-screen">
+          <div className="h-[200px] lg:h-screen w-full overflow-hidden relative">
+            <Image
+              src="/images/champions.webp"
+              alt="Liverpool FC Champions"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+        </div>
 
-              <FormField
-                control={form.control}
-                name="email"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<SignUpFormData, "email">;
-                }) => (
-                  <FormItem>
-                    <FormLabel className="text-[#1A1A1A]">
-                      Email address
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email address"
-                        {...field}
-                        className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      We&apos;ll use this to send you important club updates and
-                      event information
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        {/* Form Column */}
+        <div className="w-full lg:w-1/2 lg:ml-[50%] flex items-center justify-center p-6 lg:p-12">
+          <Card className="w-full max-w-md border-2 border-[#C8102E] shadow-lg">
+            <CardHeader className="bg-[#C8102E] text-white pt-1">
+              <CardTitle className="text-2xl font-bold">
+                Join Kop Kenya OLSC
+              </CardTitle>
+              <CardDescription className="text-white/90 space-y-2 pb-2">
+                <p>
+                  Welcome to Kop Kenya, the official Liverpool FC Official
+                  Liverpool Supporters Club (OLSC) in Kenya. We bring together
+                  Kenyan Reds to share our passion for Liverpool FC.
+                </p>
+                <p>By joining our community, you&apos;ll get access to:</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Match screenings and watch parties</li>
+                  <li>Exclusive club events and meetups</li>
+                  <li>Updates on Liverpool FC news and activities</li>
+                  <li>A vibrant community of fellow supporters</li>
+                </ul>
+                <p className="pt-2">
+                  Fill in your details below to become a member.
+                </p>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<SignUpFormData, "name">;
+                    }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#1A1A1A]">
+                          Full Name
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter your full name"
+                            {...field}
+                            className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<SignUpFormData, "phone">;
-                }) => (
-                  <FormItem>
-                    <FormLabel className="text-[#1A1A1A]">
-                      Phone Number
-                    </FormLabel>
-                    <FormControl>
-                      <PhoneInput
-                        country="ke"
-                        value={field.value}
-                        onChange={field.onChange}
-                        inputStyle={phoneInputStyles.input}
-                        buttonStyle={phoneInputStyles.button}
-                        containerStyle={phoneInputStyles.container}
-                        dropdownStyle={phoneInputStyles.dropdown}
-                        inputProps={{
-                          name: "phone",
-                          required: true,
-                        }}
-                        specialLabel=""
-                        enableSearch
-                        searchPlaceholder="Search country..."
-                        searchNotFound="No country found"
-                        countryCodeEditable={false}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      We&apos;ll use this to contact you about events and match
-                      screenings
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="dateOfBirth"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<SignUpFormData, "dateOfBirth">;
-                }) => {
-                  // Calculate the date 18 years ago from today
-                  const today = new Date();
-                  const maxDate = new Date(
-                    today.getFullYear() - 18,
-                    today.getMonth(),
-                    today.getDate()
-                  );
-                  const minDate = new Date(1900, 0, 1); // Set a reasonable minimum date
-
-                  return (
-                    <FormItem>
-                      <FormLabel className="text-[#1A1A1A]">
-                        Date of Birth
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="date"
-                          {...field}
-                          max={maxDate.toISOString().split("T")[0]}
-                          min={minDate.toISOString().split("T")[0]}
-                          className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        You must be at least 18 years old to join
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-
-              <FormField
-                control={form.control}
-                name="isAlreadyInWhatsapp"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<
-                    SignUpFormData,
-                    "isAlreadyInWhatsapp"
-                  >;
-                }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel className="text-[#1A1A1A]">
-                      Are you already in the Kop Kenya WhatsApp group?
-                    </FormLabel>
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex flex-col space-y-1"
-                      >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem
-                              value="yes"
-                              className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            Yes, I am already in the group
-                          </FormLabel>
-                        </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem
-                              value="no"
-                              className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            No, I am not in the group
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                    <FormDescription>
-                      Our WhatsApp group is where we coordinate match screenings
-                      and share updates
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {isAlreadyInWhatsapp === "no" && (
-                <FormField
-                  control={form.control}
-                  name="shouldInviteToWhatsapp"
-                  render={({
-                    field,
-                  }: {
-                    field: ControllerRenderProps<
-                      SignUpFormData,
-                      "shouldInviteToWhatsapp"
-                    >;
-                  }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Join WhatsApp Group</FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<SignUpFormData, "email">;
+                    }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#1A1A1A]">
+                          Email address
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="Enter your email address"
+                            {...field}
+                            className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
+                          />
+                        </FormControl>
                         <FormDescription>
-                          I would like to join the Kop Kenya WhatsApp group to
-                          stay connected with fellow supporters
+                          We&apos;ll use this to send you important club updates
+                          and event information
                         </FormDescription>
-                      </div>
-                    </FormItem>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<SignUpFormData, "phone">;
+                    }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#1A1A1A]">
+                          Phone Number
+                        </FormLabel>
+                        <FormControl>
+                          <PhoneInput
+                            country="ke"
+                            value={field.value}
+                            onChange={field.onChange}
+                            inputStyle={phoneInputStyles.input}
+                            buttonStyle={phoneInputStyles.button}
+                            containerStyle={phoneInputStyles.container}
+                            dropdownStyle={phoneInputStyles.dropdown}
+                            inputProps={{
+                              name: "phone",
+                              required: true,
+                            }}
+                            specialLabel=""
+                            enableSearch
+                            searchPlaceholder="Search country..."
+                            searchNotFound="No country found"
+                            countryCodeEditable={false}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          We&apos;ll use this to contact you about events and
+                          match screenings
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="dateOfBirth"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<
+                        SignUpFormData,
+                        "dateOfBirth"
+                      >;
+                    }) => {
+                      // Calculate the date 18 years ago from today
+                      const today = new Date();
+                      const maxDate = new Date(
+                        today.getFullYear() - 18,
+                        today.getMonth(),
+                        today.getDate()
+                      );
+                      const minDate = new Date(1900, 0, 1); // Set a reasonable minimum date
+
+                      return (
+                        <FormItem>
+                          <FormLabel className="text-[#1A1A1A]">
+                            Date of Birth
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="date"
+                              {...field}
+                              max={maxDate.toISOString().split("T")[0]}
+                              min={minDate.toISOString().split("T")[0]}
+                              className="border-[#C8102E] focus:border-[#C8102E] focus:ring-[#C8102E]"
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            You must be at least 18 years old to join
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="isAlreadyInWhatsapp"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<
+                        SignUpFormData,
+                        "isAlreadyInWhatsapp"
+                      >;
+                    }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel className="text-[#1A1A1A]">
+                          Are you already in the Kop Kenya WhatsApp group?
+                        </FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex flex-col space-y-1"
+                          >
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem
+                                  value="yes"
+                                  className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Yes, I am already in the group
+                              </FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem
+                                  value="no"
+                                  className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-white data-[state=checked]:text-[#C8102E] data-[state=checked]:border-[#C8102E] [&>span]:bg-[#C8102E]"
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                No, I am not in the group
+                              </FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormDescription>
+                          Our WhatsApp group is where we coordinate match
+                          screenings and share updates
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {isAlreadyInWhatsapp === "no" && (
+                    <FormField
+                      control={form.control}
+                      name="shouldInviteToWhatsapp"
+                      render={({
+                        field,
+                      }: {
+                        field: ControllerRenderProps<
+                          SignUpFormData,
+                          "shouldInviteToWhatsapp"
+                        >;
+                      }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                              className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Join WhatsApp Group</FormLabel>
+                            <FormDescription>
+                              I would like to join the Kop Kenya WhatsApp group
+                              to stay connected with fellow supporters
+                            </FormDescription>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
                   )}
-                />
-              )}
 
-              <FormField
-                control={form.control}
-                name="shouldReceiveUpdates"
-                render={({
-                  field,
-                }: {
-                  field: ControllerRenderProps<
-                    SignUpFormData,
-                    "shouldReceiveUpdates"
-                  >;
-                }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>Receive Updates</FormLabel>
-                      <FormDescription>
-                        I would like to receive updates about match screenings,
-                        events, and club activities
-                      </FormDescription>
-                    </div>
-                  </FormItem>
-                )}
-              />
+                  <FormField
+                    control={form.control}
+                    name="shouldReceiveUpdates"
+                    render={({
+                      field,
+                    }: {
+                      field: ControllerRenderProps<
+                        SignUpFormData,
+                        "shouldReceiveUpdates"
+                      >;
+                    }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            className="border-[#C8102E] text-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:text-white data-[state=checked]:border-[#C8102E]"
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>Receive Updates</FormLabel>
+                          <FormDescription>
+                            I would like to receive updates about match
+                            screenings, events, and club activities
+                          </FormDescription>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
 
-              <Button
-                type="submit"
-                className="w-full bg-[#C8102E] hover:bg-[#A00D24] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Creating account..." : "Join Kop Kenya"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#C8102E] hover:bg-[#A00D24] text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Creating account..." : "Join Kop Kenya"}
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }
