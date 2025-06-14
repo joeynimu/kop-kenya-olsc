@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KOP Kenya OLS",
-  description: "Official KOP Kenya OLS",
+  title: "KOP Kenya OLSC",
+  description: "Official KOP Kenya OLSC",
 };
 
 export default function RootLayout({
